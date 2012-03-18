@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <inttypes.h>
-#include "WProgram.h"
+#include "Arduino.h"
 
 
 #include "../Wire/Wire.h"
@@ -285,8 +285,9 @@ inline void PCFCrystal::command(uint8_t value) {
   send(value, LOW);
 }
 
-inline void PCFCrystal::write(uint8_t value) {
+inline size_t PCFCrystal::write(uint8_t value) {
   send(value, HIGH);
+  return 0;
 }
 
 /************ low level data pushing commands **********/
@@ -388,7 +389,7 @@ void PCFCrystal::setBit(uint8_t *buff, uint8_t mask, uint8_t value)
 void PCFCrystal::writePCF(uint8_t address, uint8_t value)
 {
   Wire.beginTransmission(address);
-  Wire.send(value);
+  Wire.write(value);
   Wire.endTransmission();
   
 }
